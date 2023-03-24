@@ -1,0 +1,25 @@
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+    endpoints:
+      web:
+        exposure:
+          include: health
+  endpoint:
+    health:
+      show-details: always
+resilience4j:
+  circuitbreaker:
+    instances:
+      depositCheckerApi:
+        failureRateThreshold: 50
+        minimumNumberOfCalls: 1
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        permittedNumberOfCallsInHalfOpenState: 3
+        waitDurationInOpenState: 30s
+        #other configs
+        registerHealthIndicator: true
+        eventConsumerBufferSize: 10
+        slidingWindowSize: 10
+        slidingWindowType: COUNT_BASED
