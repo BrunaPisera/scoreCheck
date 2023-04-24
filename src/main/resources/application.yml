@@ -1,3 +1,6 @@
+spring:
+  application:
+    name: score-checker-api
 management:
   health:
     circuitbreakers:
@@ -13,13 +16,20 @@ resilience4j:
   circuitbreaker:
     instances:
       depositCheckerApi:
-        failureRateThreshold: 50
+        failureRateThreshold: 60
         minimumNumberOfCalls: 1
         automaticTransitionFromOpenToHalfOpenEnabled: true
         permittedNumberOfCallsInHalfOpenState: 3
-        waitDurationInOpenState: 30s
+        waitDurationInOpenState: 10s
         #other configs
         registerHealthIndicator: true
         eventConsumerBufferSize: 10
         slidingWindowSize: 10
         slidingWindowType: COUNT_BASED
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8089/eureka
